@@ -70,9 +70,9 @@ private _missingPatches = "isClass _x && !((configName _x) in _patchList)" confi
 _missingPatches = _missingPatches apply {configName _x};
 
 if !(_missingPatches isEqualTo []) exitWith {
-    [profileName,getPlayerUID player,(str _missingPatches)] remoteExec ["SPY_fnc_cookieJar",RSERV];
-    [profileName,format ["Unknown Addon Patches: %1",_missingPatches]] remoteExec ["SPY_fnc_notifyAdmins",RCLIENT];
-    sleep 0.5;
+    [profileName,getPlayerUID player,(str _missingPatches)] remoteExecCall ["SPY_fnc_cookieJar",RSERV];
+    [profileName,format ["Unknown Addon Patches: %1",_missingPatches]] remoteExecCall ["SPY_fnc_notifyAdmins",RCLIENT];
+    // sleep 0.5;
     failMission "SpyGlass";
 };
 
@@ -88,9 +88,9 @@ private _allowedChildren = [
 
 {
     if !((configName _x) in _allowedChildren) exitWith {
-        [profileName,getPlayerUID player,"Modified_MPInterrupt"] remoteExec ["SPY_fnc_cookieJar",RSERV];
-        [profileName,"Devcon like executor detected"] remoteExec ["SPY_fnc_notifyAdmins",RCLIENT];
-        sleep 0.5;
+        [profileName,getPlayerUID player,"Modified_MPInterrupt"] remoteExecCall ["SPY_fnc_cookieJar",RSERV];
+        [profileName,"Devcon like executor detected"] remoteExecCall ["SPY_fnc_notifyAdmins",RCLIENT];
+        // sleep 0.5;
         failMission "SpyGlass";
     };
     true
@@ -109,8 +109,8 @@ private _allowedChildren = [
     if (_onLoad != _expectedOnLoad || _onUnload != _expectedOnUnload) exitWith {
         [profileName,getPlayerUID player,format ["Modified_Method_%1", _class]] remoteExecCall ["SPY_fnc_cookieJar",RSERV];
         [profileName,format ["Modified Display Method %1 (Memory Edit)", _class]] remoteExecCall ["SPY_fnc_notifyAdmins",RCLIENT];
-        sleep 0.5;
-        SPYGLASS_END
+        // sleep 0.5;
+        failMission "SpyGlass";
     };
 } forEach [
     ["RscDisplayMainMap","[""onLoad"",_this,""RscDiary"",'GUI'] call 	(uiNamespace getVariable 'BIS_fnc_initDisplay')","[""onUnload"",_this,""RscDiary"",'GUI'] call 	(uiNamespace getVariable 'BIS_fnc_initDisplay')"],
@@ -141,12 +141,26 @@ private _allowedChildren = [
 if (getText(configFile >> "CfgFunctions" >> "init") != "A3\functions_f\initFunctions.sqf") then {
     [profileName,getPlayerUID player,"Modified_Functions_Init"] remoteExecCall ["SPY_fnc_cookieJar",RSERV];
     [profileName,"Modified_Functions_Init"] remoteExecCall ["SPY_fnc_notifyAdmins",RCLIENT];
-    sleep 0.5;
-    SPYGLASS_END
+    // sleep 0.5;
+    failMission "SpyGlass";
 };
 
-[] execVM "SpyGlass\fn_cmdMenuCheck.sqf";
-[] execVM "SpyGlass\fn_menuCheck.sqf";
+private _menuCheck = compileScript ["SpyGlass\fn_menuCheck.sqf", true];
+addMissionEventHandler ["EachFrame", {
+        if (diag_frameNo % 7 == 0) then {
+            call (_thisArgs # 0);
+        };
+    },
+    [_menuCheck]
+];
+private _cmdMenuCheck = compileScript ["SpyGlass\fn_cmdMenuCheck.sqf", true];
+addMissionEventHandler ["EachFrame", {
+        if (diag_frameNo % 5 == 0) then {
+            call (_thisArgs # 0);
+        };
+    },
+    [_cmdMenuCheck]
+];
 
 /*
     Disabled at 5.0.0

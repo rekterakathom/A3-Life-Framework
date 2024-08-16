@@ -11,7 +11,11 @@ if (!hasInterface && !isServer) exitWith {
 };
 
 CONST(BIS_fnc_endMission,BIS_fnc_endMission);
-if (LIFE_SETTINGS(getNumber,"spyGlass_toggle") isEqualTo 1) then {[] execVM "SpyGlass\fn_initSpy.sqf";};
+if (LIFE_SETTINGS(getNumber,"spyGlass_toggle") isEqualTo 1) then {
+    isNil {
+        call compileScript ["SpyGlass\fn_initSpy.sqf", true];
+    };
+};
 
 [] execVM "core\init.sqf";
 [] execVM "briefing.sqf";
