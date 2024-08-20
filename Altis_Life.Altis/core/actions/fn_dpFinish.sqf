@@ -18,4 +18,5 @@ _price = round(1.7 * _dis);
 life_cur_task setTaskState "Succeeded";
 player removeSimpleTask life_cur_task;
 CASH = CASH + _price;
+call life_fnc_hudUpdate;
 [0] call SOCK_fnc_updatePartial;

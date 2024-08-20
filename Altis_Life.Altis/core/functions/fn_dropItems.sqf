@@ -97,6 +97,7 @@ _unit = _this select 0;
                 _obj setPos _pos;
                 [_obj] remoteExecCall ["life_fnc_simDisable",RANY];
                 missionNamespace setVariable ["CASH",0];
+                call life_fnc_hudUpdate;
             };
         };
 

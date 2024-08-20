@@ -13,4 +13,5 @@ if (_value isEqualTo -1) exitWith {};
 
 hint format [localize "STR_ATM_WithdrawSuccessG",[_value] call life_fnc_numberText];
 CASH = CASH + _value;
+call life_fnc_hudUpdate;
 [] call life_fnc_atmMenu;

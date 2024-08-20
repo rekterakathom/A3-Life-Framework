@@ -141,6 +141,7 @@ if (_hasLicense) then {
     "progressBar" cutText ["","PLAIN"];
     if (_minimumConversions isEqualTo (_totalConversions call BIS_fnc_lowestNum)) then {hint localize "STR_NOTF_ItemProcess";} else {hint localize "STR_Process_Partial";};
     CASH = CASH - _cost;
+    call life_fnc_hudUpdate;
     [0] call SOCK_fnc_updatePartial;
     life_is_processing = false;
     life_action_inUse = false;

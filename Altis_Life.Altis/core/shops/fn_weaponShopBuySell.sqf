@@ -72,3 +72,4 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
 };
 [0] call SOCK_fnc_updatePartial;
 [3] call SOCK_fnc_updatePartial;
+call life_fnc_hudUpdate;
