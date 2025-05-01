@@ -25,6 +25,7 @@ if (!_deposit && _value > _gFund) exitWith {hint localize "STR_ATM_NotEnoughFund
 if (_deposit) then {
     CASH = CASH - _value;
     [] call life_fnc_atmMenu;
+    call life_fnc_hudUpdate;
 };
 
 if (life_HC_isActive) then {

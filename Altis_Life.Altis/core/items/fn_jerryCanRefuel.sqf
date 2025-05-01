@@ -71,6 +71,7 @@ if (_action) then {
     if (!([false,"fuelEmpty",1] call life_fnc_handleInv)) exitWith {life_action_inUse = false;};
     life_action_inUse = false;
     CASH = CASH - _fuelCost;
+    call life_fnc_hudUpdate;
     [true,"fuelFull",1] call life_fnc_handleInv;
     hint localize "STR_ISTR_Jerry_Refueled";
 } else {

@@ -21,6 +21,7 @@ BANK = BANK + _value;
 hint format [localize "STR_ATM_DepositSuccess",[_value] call life_fnc_numberText];
 [] call life_fnc_atmMenu;
 [6] call SOCK_fnc_updatePartial;
+call life_fnc_hudUpdate;
 
 if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {

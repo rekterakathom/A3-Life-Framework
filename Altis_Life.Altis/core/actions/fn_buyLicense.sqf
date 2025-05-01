@@ -17,6 +17,7 @@ _varName = LICENSE_VARNAME(_type,_sideFlag);
 
 if (CASH < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price] call life_fnc_numberText,localize _displayName];};
 CASH = CASH - _price;
+call life_fnc_hudUpdate;
 
 [0] call SOCK_fnc_updatePartial;
 

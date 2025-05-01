@@ -21,6 +21,7 @@ _action = [
 
 if (_action) then {
     CASH = CASH + _value;
+    call life_fnc_hudUpdate;
     hint format [localize "STR_ANOTF_Success",[_value] call life_fnc_numberText];
     closeDialog 0;
 } else {

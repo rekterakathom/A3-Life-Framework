@@ -119,6 +119,7 @@ if (_fuelState <= 0) then {titleText [localize "STR_FuelTank_Empty","PLAIN"]};
 sleep 2;
 
 CASH = CASH + _win;
+call life_fnc_hudUpdate;
 [0] call SOCK_fnc_updatePartial;
 
 titleText [format [localize "STR_FuelTank_Money", _win], "PLAIN"];

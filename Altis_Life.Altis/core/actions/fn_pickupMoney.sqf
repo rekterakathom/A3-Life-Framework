@@ -23,6 +23,7 @@ if (!isNil "_value") exitWith {
     player playMove "AinvPknlMstpSlayWrflDnon";
     titleText[format [localize "STR_NOTF_PickedMoney",[_value] call life_fnc_numberText],"PLAIN"];
     CASH = CASH + _value;
+    call life_fnc_hudUpdate;
     [0] call SOCK_fnc_updatePartial;
     life_action_delay = time;
 

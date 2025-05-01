@@ -27,6 +27,7 @@ if (_badCharacter) exitWith {hint localize "STR_News_UnsupportedCharacter"};
 [_broadcastHeader,_broadcastMessage,profileName] remoteExec ['life_fnc_AAN',-2];
 
 CASH = CASH - LIFE_SETTINGS(getNumber,"news_broadcast_cost");
+call life_fnc_hudUpdate;
 [0] call SOCK_fnc_updatePartial;
 life_broadcastTimer = time;
 publicVariable "life_broadcastTimer";
