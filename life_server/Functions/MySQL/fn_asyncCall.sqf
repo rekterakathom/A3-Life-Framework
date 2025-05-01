@@ -11,16 +11,18 @@
         1: INTEGER (1 = ASYNC + not return for update/insert, 2 = ASYNC + return for query's).
         3: BOOL (True to return a single array, false to return multiple entries mainly for garage).
 */
-private ["_queryStmt","_mode","_multiarr","_queryResult","_key","_return","_loop"];
-_queryStmt = [_this,0,"",[""]] call BIS_fnc_param;
-_mode = [_this,1,1,[0]] call BIS_fnc_param;
-_multiarr = [_this,2,false,[false]] call BIS_fnc_param;
+private ["_queryResult","_key","_return","_loop"];
+params [
+    ["_queryStmt", "", [""]],
+    ["_mode", 1, [0]],
+    ["_multiarr", false,[false]]
+];
 
 _key = EXTDB format ["%1:%2:%3",_mode,FETCH_CONST(life_sql_id),_queryStmt];
 
 if (_mode isEqualTo 1) exitWith {true};
 
-_key = call compile format ["%1",_key];
+_key = parseSimpleArray format ["%1",_key];
 _key = (_key select 1);
 _queryResult = EXTDB format ["4:%1", _key];
 
@@ -44,7 +46,7 @@ if (_queryResult isEqualTo "[5]") then {
     if (!_loop) exitWith {};
     };
 };
-_queryResult = call compile _queryResult;
+_queryResult = parseSimpleArray _queryResult;
 if ((_queryResult select 0) isEqualTo 0) exitWith {diag_log format ["extDB3: Protocol Error: %1", _queryResult]; []};
 _return = (_queryResult select 1);
 if (!_multiarr && count _return > 0) then {
